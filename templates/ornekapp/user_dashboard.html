@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Paneli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .welcome-card {
+            background: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .action-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .action-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .action-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        .notification {
+            background: #f8f4e5;
+            border-left: 4px solid #f1c40f;
+            padding: 10px 15px;
+            margin-top: 20px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kullanıcı Paneli</h1>
+            <div class="nav">
+                <a href="{% url 'index' %}">Ana Sayfa</a>
+                <a href="{% url 'profile' %}">Profil</a>
+                <a href="{% url 'logout' %}" title="Django ve Keycloak'tan çıkış yap">Çıkış</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-card">
+                <h2>Hoş Geldiniz, {{ user.first_name|default:user.username }}</h2>
+                <p>Kullanıcı panelinizden işlemlerinizi gerçekleştirebilir ve bilgilerinizi görüntüleyebilirsiniz.</p>
+            </div>
+
+            <h2>İşlemler</h2>
+
+            <div class="action-card">
+                <h3>Kişisel Bilgiler</h3>
+                <p>Kişisel bilgilerinizi görüntüleyebilir ve güncelleyebilirsiniz.</p>
+                <a href="#" class="action-link">Bilgilerinizi Yönetin &rarr;</a>
+            </div>
+
+            <div class="action-card">
+                <h3>Belgelerim</h3>
+                <p>Sisteme yüklediğiniz belgeleri görüntüleyebilirsiniz.</p>
+                <a href="#" class="action-link">Belgeleri Görüntüle &rarr;</a>
+            </div>
+
+            <div class="action-card">
+                <h3>Mesajlar</h3>
+                <p>Gelen mesajlarınızı kontrol edebilirsiniz.</p>
+                <a href="#" class="action-link">Mesajları Görüntüle &rarr;</a>
+            </div>
+
+            <div class="notification">
+                <strong>Bilgi:</strong> Güncel duyuru ve bildirimleri burada görebilirsiniz.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

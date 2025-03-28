@@ -1,0 +1,244 @@
+{% load role_tags %}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background: #2ecc71;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background: #f9f9f9;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .status-active {
+            background: #d5f5e3;
+            color: #27ae60;
+        }
+
+        .status-pending {
+            background: #fef9e7;
+            color: #f1c40f;
+        }
+
+        .status-inactive {
+            background: #f2f3f4;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Yönetim Paneli</h1>
+            <div class="nav">
+                <a href="{% url 'index' %}">Ana Sayfa</a>
+                <a href="{% url 'profile' %}">Profil</a>
+
+
+                {% has_role 'admin' %}
+                <a href="{% url 'admin_dashboard' %}">Admin Paneli</a>
+                {% end %}
+
+                <a href="{% url 'logout' %}" title="Django ve Keycloak'tan çıkış yap">Çıkış</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="dashboard-section">
+                <h2>Yönetim Özeti</h2>
+                <p>Hoş geldiniz, <strong>{{ user.username }}</strong>. Bu panel ile sistemi yönetebilir ve
+                    istatistikleri görebilirsiniz.</p>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Son Kullanıcı Aktiviteleri</h3>
+                        <a href="#" class="btn">Tümünü Gör</a>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Kullanıcı</th>
+                                <th>İşlem</th>
+                                <th>Tarih</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ahmet.yilmaz</td>
+                                <td>Belge yüklendi</td>
+                                <td>10.05.2023 14:22</td>
+                                <td><span class="status status-active">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>merve.kaya</td>
+                                <td>Profil güncellendi</td>
+                                <td>09.05.2023 16:45</td>
+                                <td><span class="status status-active">Tamamlandı</span></td>
+                            </tr>
+                            <tr>
+                                <td>ali.demir</td>
+                                <td>İzin talebi</td>
+                                <td>08.05.2023 09:15</td>
+                                <td><span class="status status-pending">Beklemede</span></td>
+                            </tr>
+                            <tr>
+                                <td>zeynep.aksoy</td>
+                                <td>Ödeme isteği</td>
+                                <td>07.05.2023 11:30</td>
+                                <td><span class="status status-inactive">İptal Edildi</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h2>Sistem İşlemleri</h2>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Kullanıcı Yönetimi</h3>
+                    </div>
+                    <p>Aktif kullanıcı sayısı: <strong>124</strong></p>
+                    <p>Bu bölümden kullanıcıları listeleyebilir, düzenleyebilir ve yeni kullanıcı ekleyebilirsiniz.</p>
+                    <div>
+                        <a href="#" class="btn">Kullanıcıları Listele</a>
+
+                        {% has_role 'admin' %}
+                        <a href="#" class="btn btn-success">Yeni Kullanıcı Ekle</a>
+                        {% end %}
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Raporlar</h3>
+                    </div>
+                    <p>Sistem raporlarını görebilir ve indirebilirsiniz.</p>
+                    <div>
+                        <a href="#" class="btn">Aylık Rapor</a>
+                        <a href="#" class="btn">Kullanıcı Aktivite Raporu</a>
+
+                        {% has_role 'admin' 'manager' %}
+                        <a href="#" class="btn btn-warning">Özel Rapor Oluştur</a>
+                        {% end %}
+                    </div>
+                </div>
+
+                {% has_role 'admin' %}
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Sistem Yönetimi (Sadece Admin)</h3>
+                    </div>
+                    <p>Bu bölüm sadece admin rolüne sahip kullanıcılar tarafından görülebilir.</p>
+                    <div>
+                        <a href="#" class="btn">Sistem Ayarları</a>
+                        <a href="#" class="btn btn-warning">Bakım Modu</a>
+                    </div>
+                </div>
+                {% end %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

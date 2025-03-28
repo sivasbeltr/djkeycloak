@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İzin Reddedildi - 403</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .error-container {
+            margin-top: 3rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-code {
+            font-size: 5rem;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            margin: 1rem 0;
+            color: #333;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .error-actions {
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .security-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="error-container">
+        <div class="security-icon">🔐</div>
+        <h1 class="error-code">403</h1>
+        <h2 class="error-title">Erişim İzniniz Yok</h2>
+        <p class="error-message">
+            Bu sayfayı görüntülemek için gerekli yetkilere sahip değilsiniz. Bu bir hata olduğunu düşünüyorsanız, lütfen
+            sistem yöneticinizle iletişime geçin.
+        </p>
+        <div class="error-actions">
+            <a href="{% url 'index' %}" class="btn">Ana Sayfaya Dön</a>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div style="margin-top: 2rem;">
+        <p>Giriş yapan kullanıcı: <strong>{{ user.username }}</strong></p>
+        <p>Kullanıcı rolleri:
+            {% for group in user.groups.all %}
+            <span style="display: inline-block; background: #eee; padding: 3px 8px; margin: 2px; border-radius: 3px;">{{
+                group.name }}</span>
+            {% empty %}
+            <em>Hiçbir rol atanmamış</em>
+            {% endfor %}
+        </p>
+    </div>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .dashboard-card {
+            background: #f5f5f5;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Paneli</h1>
+            <div class="nav">
+                <a href="{% url 'index' %}">Ana Sayfa</a>
+                <a href="{% url 'profile' %}">Profil</a>
+                <a href="{% url 'management_dashboard' %}">Yönetim Paneli</a>
+                <a href="{% url 'logout' %}" title="Django ve Keycloak'tan çıkış yap">Çıkış</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>Sistem Yönetimi</h2>
+            <p>Hoş geldiniz, <strong>{{ user.username }}</strong>. Bu panelden sistem yönetimi ile ilgili işlemleri
+                gerçekleştirebilirsiniz.</p>
+
+            <div class="dashboard-card">
+                <h3>Kullanıcı Yönetimi</h3>
+                <p>Sisteme kayıtlı kullanıcıları görüntüleyebilir, düzenleyebilir ve yeni kullanıcı ekleyebilirsiniz.
+                </p>
+                <a href="#" class="action-button">Kullanıcıları Yönet</a>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Rol Yönetimi</h3>
+                <p>Sistemdeki rolleri ve izinleri düzenleyebilirsiniz.</p>
+                <a href="#" class="action-button">Rolleri Yönet</a>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Sistem Ayarları</h3>
+                <p>Genel sistem ayarlarını yapılandırabilirsiniz.</p>
+                <a href="#" class="action-button">Ayarları Düzenle</a>
+            </div>
+
+            <h2>Sistem İstatistikleri</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Kullanıcılar</h3>
+                    <div class="stat-value">157</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Aktif Oturumlar</h3>
+                    <div class="stat-value">23</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Roller</h3>
+                    <div class="stat-value">5</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Son 24 Saat</h3>
+                    <div class="stat-value">42</div>
+                    <small>giriş</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

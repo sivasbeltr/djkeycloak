@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Profili</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 20px 0;
+        }
+
+        .profile-info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .roles {
+            margin-top: 20px;
+        }
+
+        .role {
+            display: inline-block;
+            background: #e0e0e0;
+            padding: 5px 10px;
+            margin-right: 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kullanıcı Profili</h1>
+            <div class="nav">
+                <a href="{% url 'index' %}">Ana Sayfa</a>
+                <a href="{% url 'logout' %}" title="Django ve Keycloak'tan çıkış yap">Çıkış</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="profile-info">
+                <h2>{{ user.get_full_name }}</h2>
+                <p><strong>Kullanıcı Adı:</strong> {{ user.username }}</p>
+                <p><strong>E-posta:</strong> {{ user.email }}</p>
+
+                <div class="roles">
+                    <h3>Roller:</h3>
+                    {% for role in roles %}
+                    <span class="role">{{ role }}</span>
+                    {% empty %}
+                    <p>Hiçbir rol atanmamış.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <h3>Erişebileceğiniz Sayfalar:</h3>
+            <ul>
+                {% if 'admin' in roles %}
+                <li><a href="{% url 'admin_dashboard' %}">Admin Paneli</a></li>
+                {% endif %}
+                {% if 'user' in roles %}
+                <li><a href="{% url 'user_dashboard' %}">Kullanıcı Paneli</a></li>
+                {% endif %}
+                {% if 'admin' in roles or 'manager' in roles %}
+                <li><a href="{% url 'management_dashboard' %}">Yönetim Paneli</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
