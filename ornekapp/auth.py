@@ -1,19 +1,25 @@
 import requests
 from django.contrib.auth.models import Group, Permission
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend
+from django.conf import settings
 
+CLIENT_ID = getattr(settings, "OIDC_RP_CLIENT_ID", None)
 
 class KeycloakRoleMixin:
     """Keycloak rollerini yönetmek için mixin"""
 
     def get_roles_from_claims(self, claims):
         """Token içerisindeki rollerini çıkarır"""
+        print("Claims:", claims)
         # Direkt 'roles' alanından rolleri al
         roles = claims.get("roles", [])
         # Eğer boşsa, eski yapıyı da kontrol et (geriye dönük uyumluluk için)
         if not roles:
-            realm_access = claims.get("realm_access", {})
-            roles = realm_access.get("roles", [])
+            # Keycloak token'ında roller resource_access altında olabilir
+            resource_access = claims.get("resource_access", {})
+            # Uygulama adı settings'ten alınan CLIENT_ID ile eşleşmeli
+            app_roles = resource_access.get(CLIENT_ID, {}).get("roles", [])
+            roles = app_roles
         return roles
 
     def update_user_roles(self, user, roles):

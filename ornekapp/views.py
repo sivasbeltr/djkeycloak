@@ -73,21 +73,21 @@ def logout_view(request):
 
 
 @login_required
-@roles_required("admin")
+@roles_required("Mudur")
 def admin_dashboard(request):
     """Sadece admin rolüne sahip kullanıcılar erişebilir"""
     return render(request, "ornekapp/admin_dashboard.html")
 
 
 @login_required
-@roles_required("user")
+@roles_required("Saha")
 def user_dashboard(request):
     """Sadece user rolüne sahip kullanıcılar erişebilir"""
     return render(request, "ornekapp/user_dashboard.html")
 
 
 @login_required
-@roles_required("admin", "manager")
+@roles_required("Admin", "Mudur")
 def management_dashboard(request):
     """Admin veya manager rolüne sahip kullanıcılar erişebilir"""
     return render(request, "ornekapp/management_dashboard.html")

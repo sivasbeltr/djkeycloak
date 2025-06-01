@@ -67,15 +67,15 @@
                 <li><a href="{% url 'profile' %}">Profil</a></li>
 
 
-                {% has_role 'admin' %}
+                {% has_role 'Admin' %}
                 <li><a href="{% url 'admin_dashboard' %}">Admin Paneli</a></li>
                 {% end %}
 
-                {% has_role 'user' %}
+                {% has_role 'Parksis' %}
                 <li><a href="{% url 'user_dashboard' %}">Kullanıcı Paneli</a></li>
                 {% end %}
 
-                {% has_role 'admin' 'manager' %}
+                {% has_role 'Admin' 'Saha' %}
                 <li><a href="{% url 'management_dashboard' %}">Yönetim Paneli</a></li>
                 {% end %}
             </ul>

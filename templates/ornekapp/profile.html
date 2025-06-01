@@ -87,10 +87,10 @@
 
             <h3>Erişebileceğiniz Sayfalar:</h3>
             <ul>
-                {% if 'admin' in roles %}
+                {% if 'Mudur' in roles %}
                 <li><a href="{% url 'admin_dashboard' %}">Admin Paneli</a></li>
                 {% endif %}
-                {% if 'user' in roles %}
+                {% if 'Parksis' in roles %}
                 <li><a href="{% url 'user_dashboard' %}">Kullanıcı Paneli</a></li>
                 {% endif %}
                 {% if 'admin' in roles or 'manager' in roles %}
